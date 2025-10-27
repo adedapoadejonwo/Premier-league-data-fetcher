@@ -8,7 +8,7 @@ This pipeline fetches data from multiple free APIs:
 - **FPL API**: Player stats, team information, fixtures
 - **Understat**: Expected Goals (xG) and Expected Assists (xA) data
 - **The Odds API**: Betting odds for Premier League matches
-- **OpenWeather**: Weather conditions for match locations
+- **WeatherAPI.com**: Weather conditions for match locations
 
 ## 🚀 Quick Start
 
@@ -30,7 +30,7 @@ Create a `.env` file with your credentials:
 ```env
 DATABASE_URL=postgresql://user:password@neon-host/dbname?sslmode=require
 ODDS_API_KEY=your_oddsapi_key_here
-OPENWEATHER_API_KEY=your_weather_api_key_here
+WEATHERAPI_KEY=your_weatherapi_key_here
 ```
 
 ### 3. Run the Pipeline
@@ -59,7 +59,7 @@ fpl_data_collector/
 ## 🔧 API Keys Required
 
 1. **The Odds API**: Get your free API key at [the-odds-api.com](https://the-odds-api.com/)
-2. **OpenWeather**: Get your free API key at [openweathermap.org](https://openweathermap.org/api)
+2. **WeatherAPI.com**: Get your free API key at [weatherapi.com](https://www.weatherapi.com/)
 
 ## 🗄️ Database Schema
 
@@ -86,6 +86,14 @@ The pipeline includes a GitHub Actions workflow that:
 - Can be triggered manually
 - Automatically commits results
 - Uses GitHub Secrets for API keys
+
+#### GitHub Actions Setup:
+1. Go to your repository → Settings → Secrets and variables → Actions
+2. Add these repository secrets:
+   - `DATABASE_URL`: Your PostgreSQL connection string
+   - `ODDS_API_KEY`: Your Odds API key
+   - `WEATHERAPI_KEY`: Your WeatherAPI.com key
+3. The workflow will automatically run daily or can be triggered manually
 
 ## 🔄 Pipeline Flow
 
@@ -118,15 +126,17 @@ To extend the pipeline:
 - **FPL API**: `https://fantasy.premierleague.com/api/bootstrap-static/`
 - **Understat**: `https://understat.com/team/{team}/2024`
 - **The Odds API**: `https://api.the-odds-api.com/v4/sports/soccer_epl/odds/`
-- **OpenWeather**: `https://api.openweathermap.org/data/2.5/weather`
+- **WeatherAPI.com**: `http://api.weatherapi.com/v1/current.json`
 
 ## 🚨 Error Handling
 
-The pipeline includes basic error handling:
-- API rate limiting
-- Database connection failures
-- Data validation
-- Logging for debugging
+The pipeline includes comprehensive error handling:
+- **API Rate Limiting**: 30-second timeouts on all API calls
+- **Database Connection Failures**: Proper validation and error logging
+- **Data Validation**: Graceful handling of missing or malformed data
+- **Environment Variables**: Validation for missing API keys
+- **Logging**: Detailed error messages for debugging
+- **Retry Logic**: Individual operation failures don't crash the entire pipeline
 
 ## 📝 License
 
