@@ -8,7 +8,7 @@ This pipeline fetches data from multiple free APIs:
 - **FPL API**: Player stats, team information, fixtures
 - **Understat**: Expected Goals (xG) and Expected Assists (xA) data
 - **The Odds API**: Betting odds for Premier League matches
-- **OpenWeather**: Weather conditions for match locations
+- **WeatherAPI**: Weather conditions for match locations
 
 ## 🚀 Quick Start
 
